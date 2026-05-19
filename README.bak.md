@@ -227,9 +227,11 @@ mostre um exemplo de api rest bem estruturado e explique seus detalhes
 Para ilustrar a aplicação prática das melhores arquiteturas e padrões REST, usaremos o cenário de uma API de e-commerce na qual um cliente (aplicação) deseja buscar a lista de pedidos de um usuário específico.
 Aqui está um exemplo de uma requisição e resposta de uma API REST bem estruturada:
 1. A Requisição (Request)
+```http
 GET /v1/clientes/1234/pedidos?limit=10&offset=0 HTTP/1.1
 Host: api.exemplo.com
 Accept: application/json
+```
 Detalhes da Requisição:
 Método HTTP (GET): Utilizado corretamente para recuperar dados sem causar efeitos colaterais (operações seguras e idempotentes)
 .
@@ -246,12 +248,15 @@ Negociação de Conteúdo (Accept: application/json): O cabeçalho Accept especi
 
 --------------------------------------------------------------------------------
 2. A Resposta (Response)
+```http
 HTTP/1.1 200 OK
 Content-Type: application/json
 API-Version: 1.0.2
 Cache-Control: max-age=60, must-revalidate
 ETag: "83921abc"
+```
 
+```json
 {
   "dados": [
     {
@@ -287,6 +292,7 @@ ETag: "83921abc"
     }
   }
 }
+```
 Detalhes da Resposta:
 Código de Status (200 OK): Comunica claramente que a operação foi bem-sucedida e que o conteúdo solicitado está no corpo da resposta
 .
@@ -312,20 +318,29 @@ Abaixo, apresento um exemplo estruturado de um CRUD para um recurso de produtos 
 --------------------------------------------------------------------------------
 1. CREATE (Criar)
 Requisição do Cliente:
+
+```http
 POST /v1/produtos HTTP/1.1
 Host: api.exemplo.com
 Content-Type: application/json
+```
 
+```json
 {
   "nome": "Smartphone",
   "preco": 2500.00,
   "categoria": "eletronicos"
 }
+```
 Resposta do Servidor:
+
+```http
 HTTP/1.1 201 Created
 Location: https://api.exemplo.com/v1/produtos/884
 Content-Type: application/json
+```
 
+```json
 {
   "id": "884",
   "nome": "Smartphone",
@@ -335,6 +350,7 @@ Content-Type: application/json
     "self": { "href": "https://api.exemplo.com/v1/produtos/884" }
   }
 }
+```
 Por que foi feito assim?
 Método POST: O verbo POST é o padrão para instruir o servidor a criar um novo recurso dentro de uma coleção
 .
@@ -348,24 +364,35 @@ Status 201 Created e Header Location: Quando a criação tem sucesso, o servidor
 --------------------------------------------------------------------------------
 2. READ (Ler / Listar e Detalhar)
 Requisição para Listar (Coleção):
+
+```http
 GET /v1/produtos?categoria=eletronicos&limit=10&offset=0 HTTP/1.1
 Host: api.exemplo.com
 Accept: application/json
+```
 Requisição para Detalhar (Item Específico):
+
+```http
 GET /v1/produtos/884 HTTP/1.1
 Host: api.exemplo.com
 Accept: application/json
+```
 Resposta do Servidor (Detalhar):
+
+```http
 HTTP/1.1 200 OK
 Content-Type: application/json
 ETag: "v1-abc1234"
+```
 
+```json
 {
   "id": "884",
   "nome": "Smartphone",
   "preco": 2500.00,
   "categoria": "eletronicos"
 }
+```
 Por que foi feito assim?
 Método GET: O verbo GET deve ser usado unicamente para recuperar dados e nunca deve alterar o estado do servidor (operação segura)
 .
