@@ -1,4 +1,4 @@
-# NotebookLM Estudo APIs
+# Guia de Estudos sobre APIs
 
 ## Objetivos
 
